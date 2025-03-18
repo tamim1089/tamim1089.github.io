@@ -14,9 +14,9 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Elliot's Blog # the main title
+title: Abdulrahman's Blog # the main title
 
-tagline: CyberSecurity, Psychology and Philosophy # it will display as the subtitle
+tagline: Cybersecurity and Philosophy # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
@@ -26,7 +26,7 @@ description: >- # used by seo meta and the atom feed
 url: "https://tamim1089.github.io"
 
 github:
-  username: getmydropper # change to your GitHub username
+  username: tamim1089 # change to your GitHub username
 
 #twitter:
 #  username: twitter_username # change to your Twitter username
@@ -34,8 +34,8 @@ github:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Elliot Alderson
-  email: example@domain.com # change to your email address
+  name: Abdulrahman Tamim
+  email: abdulrahmantamim1089@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
 #    - https://twitter.com/getmydropper # change to your Twitter homepage
@@ -97,7 +97,7 @@ theme_mode:  dark
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://upload.wikimedia.org/wikipedia/commons/4/4d/Cat_November_2010-1a.jpg
+avatar: https://avatars.githubusercontent.com/u/82332026?v=4
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
