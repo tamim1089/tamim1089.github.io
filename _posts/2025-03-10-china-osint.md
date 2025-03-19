@@ -4,8 +4,8 @@ date: 2025-03-9 09:17:00 +/-TTTT
 image:
   path: /assets/img/favicons/china-spying-illustration-foreign-policy-b-1200x628-1.webp
   class: "img-right"
-categories: [WebSec]
-tags: [WebSec]
+categories: [OSINT]
+tags: [OSINT]
 ---
 
 ## Introduction
