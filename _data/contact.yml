@@ -23,6 +23,14 @@
   url:  'https://www.linkedin.com/in/abdulrahman-tamim/'                  # Fill with your Linkedin homepage
 
 
+- type: more
+  icon: 'fa-solid fa-id-badge'
+  url: 'https://getmydropper.vercel.app/'  
+
+- type: rss
+  icon: "fas fa-rss"
+  noblank: true
+
 #
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'
