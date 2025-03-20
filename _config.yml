@@ -52,6 +52,10 @@ webmaster_verifications:
   baidu: # fill in your Baidu verification code
   facebook: # fill in your Facebook verification code
 
+paginate: 5  # Adjust this if needed
+paginate_path: "/page:num/"
+
+
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
