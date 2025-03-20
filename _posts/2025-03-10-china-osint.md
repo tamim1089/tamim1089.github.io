@@ -1,6 +1,6 @@
 ---
 title: How China Uses OSINT for Military Strategy
-date: 2025-03-9 09:17:00 +/-TTTT
+date: 2025-03-20 09:17:00 +/-TTTT
 image:
   path: /assets/img/favicons/china-spying-illustration-foreign-policy-b-1200x628-1.webp
   class: "img-right"
