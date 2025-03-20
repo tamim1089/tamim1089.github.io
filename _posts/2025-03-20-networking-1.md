@@ -12,6 +12,43 @@
 # Welcome to Networking Concepts – The Chill Guide
 
 So, you wanna understand how computers talk to each other? Maybe you just wanna know what the heck an IP address is, or why your WiFi sucks sometimes? Well, you’re in the right place. This blog series is gonna break down networking from the absolute basics to the deepest details, in a way that even your grandma (or your lazy friend who never reads) could get. We’ll cover how data moves across the internet, what makes a network fast or slow, and even how hackers exploit weak setups. No boring textbook talk—just real, useful knowledge you can actually apply. If you use the internet (which, let’s be real, you do), then this is for you. Let’s get into it. 
+---
+
+# Content
+## 1. Introduction and Setup  
+- What is networking, and why does it matter?  
+- Installing Python, VS Code, and GNS3 on Windows, macOS, and Linux  
+- Understanding the command line (CLI) for networking  
+- Verifying your setup and first network commands  
+
+## 2. Networking Overview  
+- What is a network?  
+- Circuit-switched vs. packet-switched networks  
+- Client-server architecture  
+- Network programming and sockets   	
+- Hands-on: Sending and analyzing packets using Python and GNS3  
+
+## 3. The Sockets API  
+- What are sockets, and how do they work?  
+- TCP vs. UDP communication  
+- Writing a simple Python client and server  
+- Understanding ports and network communication  
+- Hands-on: Building a basic chat application  
+
+## 4. The Layered Network Model  
+- The OSI model vs. the TCP/IP model  
+- How data moves through the network stack  
+- Encapsulation and decapsulation  
+- Hands-on: Inspecting packet headers using Python and Wireshark  
+- Simulating data flow in GNS3  
+
+## 5. Project: HTTP Client and Server  
+- How the web works (HTTP and HTTPS)  
+- Writing an HTTP client in Python  
+- Building a simple web server  
+- Handling GET and POST requests  
+- Hands-on: Testing with a browser and inspecting traffic with BurpSuite  
+
 
 ---
 
