@@ -35,7 +35,7 @@ China’s approach to OSINT is not a passive exercise in intelligence gathering�
 
 ### **Step 1: Mass Data Harvesting**
   
-China’s intelligence operations begin with **massive-scale data harvesting**, utilizing a combination of **AI-powered reconnaissance tools, network surveillance, and automated information extraction pipelines**. The **People’s Liberation Army (PLA) Strategic Support Force (SSF)** and state-backed intelligence firms work together to **vacuum up global military intelligence from thousands of open sources in real-time**.
+Chinas intelligence operations begin with **massive-scale data harvesting**, utilizing a combination of **AI-powered reconnaissance tools, network surveillance, and automated information extraction pipelines**. The **People’s Liberation Army (PLA) Strategic Support Force (SSF)** and state-backed intelligence firms work together to **vacuum up global military intelligence from thousands of open sources in real-time**.
 
 #### **Key Data Sources Targeted:**
   
