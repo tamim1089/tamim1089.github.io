@@ -13,446 +13,577 @@
 
 So, you wanna understand how computers talk to each other? Maybe you just wanna know what the heck an IP address is, or why your WiFi sucks sometimes? Well, you’re in the right place. This blog series is gonna break down networking from the absolute basics to the deepest details, in a way that even your grandma (or your lazy friend who never reads) could get. We’ll cover how data moves across the internet, what makes a network fast or slow, and even how hackers exploit weak setups. No boring textbook talk—just real, useful knowledge you can actually apply. If you use the internet (which, let’s be real, you do), then this is for you. Let’s get into it. 
 
+---
 
-# Before We Begin: Setting Up Like a Pro
+# 1. Introduction and Setup  
 
-## Do You Even Need to Install This?
+## What is Networking, and Why Does It Matter?  
 
-You could just read this blog and move on, but if you actually want to **see networking in action**, you’ll need to install some tools. We’re not just talking about theory here—you’ll be **writing Python scripts, simulating real networks, and troubleshooting like a pro**.  
+Networking is what allows **computers, phones, servers, and everything else** to communicate. Without networks, devices would be **isolated**, unable to share data or connect to the internet.  
 
-If you follow along, you’ll understand **how data moves, how the internet works, and how to automate networking with code.** This isn’t just for learning, it’s **preparing you for real-world skills**.
+Think about everything that depends on networking:  
+- **Messaging** apps like WhatsApp or iMessage  
+- **Websites** like Google and YouTube  
+- **Online gaming**  
+- **Cloud storage** services like Google Drive  
+- **Remote work tools** like Zoom  
+
+Even if you just want to **watch YouTube**, **networking is happening** in the background:  
+1. Your **device** asks YouTube for a video.  
+2. YouTube’s **servers** send back the data.  
+3. Your **device downloads and plays it**.  
+
+Networking is everywhere, and understanding it **lets you take control of how devices communicate** instead of just using the internet blindly.  
 
 ---
 
-# 1. Installing Python
+## What You Will Learn in This Guide  
 
-### Why Do We Need Python?
-- Because networking isn’t just cables and routers, it’s about **programming, automation, and security.**
-- We’ll use Python to **analyze packets, build network tools, and simulate attacks (ethically, of course).**
-- Most networking tools today **are written in Python**, so knowing it is essential.
+By the time you finish this blog series, you will:  
+- **Understand how data moves across a network**  
+- **Learn how computers, servers, and websites communicate**  
+- **Write your own network programs in Python**  
+- **Simulate real-world networking in GNS3**  
+- **Use Wireshark to analyze network traffic**  
+
+We’re going to start **from scratch**, so no experience is needed.  
 
 ---
 
-## Windows
-1. Go to [python.org](https://www.python.org/downloads/) and download the latest version.
-2. **IMPORTANT:** Check the box **"Add Python to PATH"** before clicking Install.
-3. Open Command Prompt (`Win + R`, type `cmd`, hit Enter) and verify the installation:
+## Setting Up Your Environment  
+
+To learn networking **properly**, we need some tools.  
+
+### What We’re Installing  
+1. **Python** – Used for writing network scripts and automation.  
+2. **VS Code** – A lightweight code editor for Python.  
+3. **GNS3** – A network simulator to test real-world networking.  
+4. **Wireshark** – A tool to capture and analyze network traffic.  
+
+We will install everything on **Windows, macOS, and Linux** step by step.  
+
+---
+
+## Installing Python  
+
+Python lets us **write code to interact with networks**, build servers, and analyze data.  
+
+### Windows  
+1. Go to [python.org](https://www.python.org/downloads/) and download the latest version.  
+2. **Check the box** that says **"Add Python to PATH"** before clicking Install.  
+3. Open **Command Prompt** (`Win + R`, type `cmd`, hit Enter) and type:  
    ```sh
    python --version
    ```
-   If it shows `Python 3.x.x`, you’re good.
+   If it says `Python 3.x.x`, the installation was successful.  
+
+![image](https://github.com/user-attachments/assets/6db0ac4d-5d37-4db6-8ac9-702637c203ea)
+
 
 ---
 
-## macOS
-1. Open Terminal (`Cmd + Space`, type "Terminal", hit Enter).
-2. Run:
+### macOS  
+1. Open **Terminal** (`Cmd + Space`, type "Terminal", hit Enter).  
+2. Run:  
    ```sh
    brew install python3
-   ```
-   If you don’t have Homebrew, install it first:
+   ```  
+   (If you don’t have Homebrew, install it first:  
    ```sh
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
-   Then try again.
-3. Verify the installation:
+   ```  
+   Then try again.)  
+3. Verify the installation:  
    ```sh
    python3 --version
-   ```
+   ```  
+
+![image](https://github.com/user-attachments/assets/10c1a3eb-085d-4754-9956-b74a7966fe34)
+
 
 ---
 
-## Linux (Debian/Ubuntu)
-1. Open Terminal (`Ctrl + Alt + T`).
-2. Run:
+### Linux (Debian/Ubuntu)  
+1. Open **Terminal** (`Ctrl + Alt + T`).  
+2. Run:  
    ```sh
    sudo apt update && sudo apt install python3 -y
    ```
-3. Verify:
+3. Verify the installation:  
    ```sh
    python3 --version
-   ```
+   ```  
 
 ---
 
-## Arch Linux
-1. Open Terminal.
-2. Run:
-   ```sh
-   sudo pacman -S python
-   ```
-3. Verify:
-   ```sh
-   python --version
-   ```
+## Installing VS Code  
+
+VS Code is a lightweight code editor that makes writing Python **easier**.  
+
+### Windows / macOS / Linux  
+1. Go to [code.visualstudio.com](https://code.visualstudio.com/) and download it.  
+2. Install it like any other program.  
+3. Open it and make sure it runs.  
 
 ---
 
-# 2. Installing VS Code
+## Installing GNS3  
 
-We need a **good code editor**, and VS Code is lightweight, cross-platform, and great for Python.
+GNS3 allows us to **simulate real-world networks** without needing physical hardware.  
 
-### Windows / macOS / Linux
-1. Go to [code.visualstudio.com](https://code.visualstudio.com/) and download it.
-2. Install it like any other program.
-3. Open it and make sure it runs.
+### Windows / macOS  
+1. Download from [gns3.com](https://www.gns3.com/software/download).  
+2. Install it and follow the setup wizard.  
 
-### Adding VS Code to Command Line (Optional but Useful)
-- **Windows**: Open VS Code, press `Ctrl+Shift+P`, search for `"Shell Command: Install"` and select it.
-- **macOS**:  
-  ```sh
-  sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
-  ```
-- **Linux** (if not already installed):  
-  ```sh
-  sudo apt install code -y  # Ubuntu/Debian
-  sudo pacman -S code       # Arch
-  ```
-
----
-
-# 3. Installing GNS3 (For Network Simulation)
-
-We’ll use **GNS3** to **simulate real networks**, from small LANs to **full-scale internet routing setups**.
-
-### Windows / macOS
-1. Download from [gns3.com](https://www.gns3.com/software/download).
-2. Install it and follow the setup wizard.
-
-### Linux (Debian/Ubuntu)
-1. Open Terminal.
-2. Run:
+### Linux (Debian/Ubuntu)  
+1. Open **Terminal**.  
+2. Run:  
    ```sh
    sudo add-apt-repository ppa:gns3/ppa -y
    sudo apt update
    sudo apt install gns3-gui gns3-server -y
    ```
 
-### Arch Linux
-1. Open Terminal.
-2. Run:
-   ```sh
-   sudo pacman -S gns3-gui gns3-server
-   ```
-
 ---
 
-# 4. Understanding the Command Line (CLI)
+## Installing Wireshark  
 
-You **can’t** work with networking without using the **command line**, so let’s get comfortable with it.  
-This is **not optional**—you’ll be using it for **configuring networks, troubleshooting issues, and running scripts**.
+Wireshark lets us **capture and analyze network traffic**, which is useful for debugging and learning how data moves.  
 
----
+### Windows / macOS  
+1. Download from [wireshark.org](https://www.wireshark.org/download.html).  
+2. Install it and follow the setup wizard.  
+3. Open Wireshark and select a **network interface** to monitor traffic.  
 
-## Windows (Command Prompt & PowerShell)
-- Open Command Prompt (`Win + R`, type `cmd`, hit Enter).
-- **Navigating Folders**:
-  ```sh
-  cd path\to\folder
-  ```
-- **List files**:
-  ```sh
-  dir
-  ```
-- **Check your IP Address**:
-  ```sh
-  ipconfig
-  ```
-- **Test network connectivity (Ping Google)**:
-  ```sh
-  ping google.com
-  ```
-
----
-
-## macOS/Linux (Terminal)
-- Open Terminal.
-- **Navigating Folders**:
-  ```sh
-  cd path/to/folder
-  ```
-- **List files**:
-  ```sh
-  ls -l
-  ```
-- **Check your IP Address**:
-  ```sh
-  ip a  # Linux
-  ifconfig  # macOS (May require: sudo ifconfig)
-  ```
-- **Test network connectivity (Ping Google)**:
-  ```sh
-  ping google.com
-  ```
-- **Trace the path of your internet request (see all routers your data passes through)**:
-  ```sh
-  traceroute google.com  # Linux/macOS
-  tracert google.com     # Windows
-  ```
-
----
-
-# 5. Running Python from the CLI
-
-Once you have Python installed, you’ll want to run your scripts from the command line.
-
-### Windows:
-```sh
-python script.py
-```
-
-### macOS/Linux:
-```sh
-python3 script.py
-```
-
-If you see an error like **"command not found"**, try `python` instead of `python3`.
-
----
-
-# 6. Final Check
-
-Make sure everything works:
-
-- Open **VS Code** and make sure it runs.
-- Open **Terminal/Command Prompt** and type:
-  ```sh
-  python --version
-  ```
-  It should return **Python 3.x.x**.
-- Open **GNS3** and start a blank project.
-- Run:
-  ```sh
-  ping google.com
-  ```
-  If you get responses, your internet is working fine.
-
----
-
-# You’re Ready
-
-Now that everything’s set up, you’re ready to **start learning networking the right way**.  
-No theory without practice. **Let’s get to it.**
-
----
-
-
-# Networking Overview – How Computers Talk to Each Other  
-
-Imagine a world without networking.  
-
-- No internet.  
-- No texting.  
-- No online games.  
-- No streaming.  
-
-Your phone would be a **fancy calculator**. Your laptop? A **glorified notepad**.  
-
-So how do computers **talk to each other**? That’s what networking is all about.  
-
-Before we jump into **IP addresses, packets, or protocols**, let’s start with **the absolute basics**.
-
----
-
-# 1️⃣ What is a Network?  
-
-A **network** is just a group of **devices** that can talk to each other.  
-
-It could be:  
-- **Two computers connected** with a cable.  
-- **Your phone and your WiFi router.**  
-- **Millions of servers** powering the internet.  
-
-If two or more devices **share information**, **that's networking.**  
-
----
-
-# 2️⃣ Circuit-Switched vs. Packet-Switched Networks  
-
-## 🛜 Circuit-Switched Networks (Old-School Phone Calls)  
-Before the internet, we used **circuit-switched networks**, like **landline phones**.  
-
-- When you made a call, the phone company **reserved a dedicated path** just for you.  
-- The line stayed open, **even if you weren’t talking**.  
-- Once you hung up, the circuit was **freed for someone else**.  
-
-### 🔴 Why is this bad?  
-- **Inefficient** → If you weren’t talking, the line was still **wasting resources**.  
-- **Expensive** → Reserved connections meant fewer calls could happen at the same time.  
-
----
-
-## 🌐 Packet-Switched Networks (How the Internet Works)  
-The internet doesn’t **reserve a full connection** for every conversation.  
-Instead, it **breaks data into small pieces called packets** and sends them **individually**.  
-
-- Each packet **finds the fastest path** to the destination.  
-- The receiver **reassembles the packets** into the original message.  
-
-### 🟢 Why is this better?  
-- **More efficient** → Multiple people can use the same network at once.  
-- **More reliable** → If one path is slow, packets take **another route**.  
-- **Scalable** → It allows billions of devices to communicate at the same time.  
-
----
-
-## 3️⃣ Hands-On: See Packets in Action  
-
-You’re about to **see packets traveling** in real-time.  
-
-### 🔹 Windows (Command Prompt)  
-1. Open **Command Prompt** (`Win + R`, type `cmd`, hit Enter).  
-2. Type:  
-   ```sh
-   ping google.com
-   ```
-3. You’ll see something like this:  
-
-   ```
-   Pinging google.com [142.250.187.206] with 32 bytes of data:
-   Reply from 142.250.187.206: bytes=32 time=20ms TTL=114
-   Reply from 142.250.187.206: bytes=32 time=18ms TTL=114
-   ```
-
-This means your computer **sent packets to Google**, and Google’s server **responded**.
-
----
-
-### 🔹 Linux/macOS (Terminal)  
+### Linux (Debian/Ubuntu)  
 1. Open **Terminal**.  
-2. Type:  
+2. Run:  
    ```sh
-   ping google.com
+   sudo apt update && sudo apt install wireshark -y
    ```
-3. You’ll see similar output, showing **how long each packet takes to travel**.  
+3. Allow Wireshark to capture packets without root privileges:  
+   ```sh
+   sudo usermod -aG wireshark $(whoami)
+   ```
+
+**Screenshot Here:** Show Wireshark’s interface with a network interface selected.  
 
 ---
 
-# 4️⃣ Client-Server Architecture – Who Talks to Who?  
+## Understanding the Command Line (CLI)  
 
-Every time you visit a website, you're using a **Client-Server Model**.  
-
-- **Client** → The device **requesting** something (your phone, laptop, browser).  
-- **Server** → The device **responding** (Google’s web server, a database, a game server).  
+The **command line** is essential for networking. It lets us:  
+- **Check network configurations**  
+- **Ping and trace network paths**  
+- **Run Python scripts efficiently**  
 
 ---
 
-## 🌎 Example: Visiting a Website  
-When you type `google.com` in your browser:  
-1. Your **computer (client)** sends a request → **"Give me Google's homepage!"**  
-2. Google’s **server** responds → **"Here’s the page!"**  
-3. Your browser **renders it**, and you see the website.  
+### Basic CLI Commands  
 
-### 🔹 Hands-On: Checking a Website’s Server  
-
-Want to see **where Google’s servers are located**?  
-
-#### 🖥 Windows (Command Prompt):  
+#### Windows (Command Prompt)  
 ```sh
-nslookup google.com
+ipconfig  # Shows network configuration
+ping google.com  # Sends packets to Google to check connectivity
 ```
 
-#### 🖥 Linux/macOS (Terminal):  
+#### Linux/macOS (Terminal)  
 ```sh
-dig google.com +short
+ip a  # Shows network interfaces and IP addresses
+ping google.com  # Sends packets to Google to check connectivity
 ```
 
-It will return **Google’s IP address**, proving that your computer talks to a **real server**.
+---
+
+## Hands-On: Verifying Your Setup  
+
+### 1. Check if Python is Installed  
+Run:  
+```sh
+python --version  # Windows
+python3 --version  # macOS/Linux
+```
+
+### 2. Test Your Connection to the Internet  
+Run:  
+```sh
+ping google.com
+```
+
+If you get **replies**, your network is working.  
 
 ---
 
-# 5️⃣ The OS, Network Programming, and Sockets  
+## Recap  
 
-Your **Operating System (OS)** controls how your computer talks to a network.  
-- **Windows, macOS, Linux** → Each handles networking **slightly differently**.  
-- **Networking Programming** → We use programming languages (like Python) to **send, receive, and analyze network data**.  
+By now, you should have:  
+- Installed **Python** for network programming  
+- Installed **VS Code** for writing and testing code  
+- Installed **GNS3** for simulating real networks  
+- Installed **Wireshark** to capture network traffic  
+- Learned some **basic CLI commands**  
 
----
-
-## 🖧 What are Sockets?  
-A **socket** is like a **phone line** for computers.  
-- It lets two devices **send and receive data**.  
-- Every website, game, and messaging app **uses sockets** under the hood.  
+Everything is **set up and ready**.  
 
 ---
 
-## 6️⃣ Hands-On: Get Your Own IP Address  
+# 2. Networking Overview  
 
-### 🔹 Windows (Command Prompt):  
+## What is a Network?  
+
+A **network** is simply **two or more devices that communicate** with each other.  
+
+This could be:  
+- **Two computers connected with a cable**.  
+- **Your phone and WiFi router**.  
+- **Millions of servers powering the internet**.  
+
+### Why Do We Need Networks?  
+Without networks, every device would be **isolated**. You couldn’t:  
+- Access the internet.  
+- Use cloud services.  
+- Send emails.  
+- Play online games.  
+
+Networking enables **data to flow between devices**, whether they're in the **same room** or on **opposite sides of the world**.  
+
+### How Data Moves in a Network  
+When two devices communicate, they **send and receive data** in a structured way.  
+1. The **sender** breaks data into **packets**.  
+2. Each packet **travels across the network**.  
+3. The **receiver** reassembles the packets.  
+
+This happens in **fractions of a second**, whether you're:  
+- **Streaming a video.**  
+- **Downloading a file.**  
+- **Sending a message.**  
+
+---
+
+## Circuit-Switched vs. Packet-Switched Networks  
+
+### Circuit-Switched Networks (Old Telephone System)  
+Before the internet, we used **circuit-switched networks**, like landline phones.  
+
+- When you made a call, a **dedicated path** was reserved **just for you**.  
+- That connection **stayed open the entire call**, even if you were silent.  
+- Once the call ended, the line was **freed up** for someone else.  
+
+#### Problems with Circuit Switching  
+- **Inefficient** – Wastes bandwidth when there is silence.  
+- **Limited Connections** – Only a certain number of people can talk at the same time.  
+
+---
+
+### Packet-Switched Networks (How the Internet Works)  
+The **internet does not reserve** a full line for every conversation. Instead, it:  
+- **Breaks data into small packets**.  
+- **Sends packets individually** to their destination.  
+- **Reassembles them at the receiving end**.  
+
+This makes networking **more efficient**, **faster**, and **scalable**.  
+
+---
+
+## Hands-On: Seeing Packets in Action  
+
+### Step 1: Checking Your Own IP Address  
+
+#### Windows (Command Prompt)  
 ```sh
 ipconfig
 ```
 
-### 🔹 Linux/macOS (Terminal):  
+#### Linux/macOS (Terminal)  
 ```sh
 ip a
 ```
 
-This will show your **local IP address**, which your router gives you.  
+This shows your **local IP address**, which your router assigns to your device.  
 
 ---
 
-# 7️⃣ Protocols – The Rules of the Internet  
+### Step 2: Testing Network Connectivity  
 
-A **protocol** is just an **agreed way of communicating**.  
-It’s like a language – if two devices don’t follow the same rules, they can’t talk.  
-
-Some of the most important network protocols are:  
-
-| Protocol | What It Does |
-|----------|-------------|
-| **TCP**  | Reliable communication, ensures all packets arrive. |
-| **UDP**  | Faster, but doesn’t check if packets are lost. |
-| **HTTP** | How websites send and receive data. |
-| **HTTPS** | Secure version of HTTP, encrypts data. |
-| **IP**   | Addresses every device on the internet. |
-| **DNS**  | Converts domain names (like google.com) into IP addresses. |
-
----
-
-# 8️⃣ Wired vs. Wireless – How Data Moves  
-
-### 📡 Wired Networks (Ethernet)  
-- Faster  
-- More stable  
-- No interference  
-
-### 🌍 Wireless Networks (WiFi)  
-- More convenient  
-- Slower than Ethernet  
-- Can be affected by walls and interference  
-
----
-
-# 9️⃣ Hands-On: Using Python for Network Commands  
-
-### 🔹 Check Your Public IP Address  
-Want to know the **IP address websites see** when you visit them?  
-
-#### 🖥 Terminal (Linux/macOS) / Command Prompt (Windows):  
+#### Windows (Command Prompt)  
 ```sh
-curl ifconfig.me
+ping google.com
 ```
 
-#### 🖥 Python Script:  
+#### Linux/macOS (Terminal)  
+```sh
+ping google.com
+```
+
+If you get replies, your network is working.  
+
+---
+
+### Step 3: Capturing Packets with Wireshark  
+
+1. **Open Wireshark**.  
+2. Select your **network interface** (WiFi or Ethernet).  
+3. Click **Start Capture**.  
+4. In a terminal or Command Prompt, run:  
+   ```sh
+   ping google.com
+   ```
+5. **Stop the capture** after a few seconds.  
+6. Look for **ICMP packets** (used by `ping`).  
+
+---
+
+### Step 4: Sending Packets with Python  
+
+Python allows us to **send network packets** using sockets.  
+
+#### Install Required Libraries  
+```sh
+pip install scapy requests
+```
+
+#### Python Script to Send Packets  
 ```python
-import requests
-ip = requests.get("https://ifconfig.me").text
-print(f"Your public IP: {ip}")
+from scapy.all import *
+import time
+
+destination_ip = "8.8.8.8"  # Google's public DNS server
+
+for i in range(5):
+    packet = IP(dst=destination_ip)/ICMP()
+    send(packet)
+    print(f"Packet {i+1} sent to {destination_ip}")
+    time.sleep(1)
+```
+
+### What This Does  
+- Creates an **ICMP packet** (same as `ping`).  
+- Sends it to `8.8.8.8` (Google’s DNS).  
+- Prints a message after each packet is sent.  
+
+#### Run the Script  
+```sh
+python packet_sender.py
+```
+
+### Check the Packets in Wireshark  
+1. Open **Wireshark**.  
+2. Start a **capture** on your network interface.  
+3. Run the script again.  
+4. You should see **ICMP packets going to 8.8.8.8**.  
+
+---
+
+# 3. The Sockets API  
+
+## What is the Sockets API?  
+
+A **socket** is a fundamental building block of networking.  
+It allows two devices to **communicate with each other over a network**.  
+
+Think of a socket as a **direct communication line** between two programs, just like a phone call between two people.  
+- You **dial a number** (connect to an IP and port).  
+- You **say something** (send data).  
+- The other person **listens and responds** (receives and processes data).  
+- Once the conversation is over, you **hang up** (close the connection).  
+
+The **Sockets API** is a set of functions that allow programmers to:  
+- **Create network connections** between devices.  
+- **Send and receive data** over the internet.  
+- **Build custom network applications** like chat apps, web servers, and game clients.  
+
+Every time you open a website, send a message, or stream a video, **sockets are working in the background**.  
+
+---
+
+## How Do Computers Communicate Over a Network?  
+
+For two computers to **exchange data**, they need:  
+
+1. **An IP Address** – A unique address for each device on the network (like a house address).  
+2. **A Port Number** – A specific communication channel inside the computer (like an apartment number).  
+
+When a program **opens a socket**, it uses an **IP address** and a **port number** to communicate with another device.  
+
+---
+
+## What is a Port?  
+
+A **port** is like an apartment number in a building.  
+- A building (IP address) can have **many apartments (ports)**.  
+- Each port handles a **specific type of communication**.  
+
+For example:  
+- **Port 80** – Used for websites (HTTP).  
+- **Port 443** – Used for secure websites (HTTPS).  
+- **Port 22** – Used for remote login (SSH).  
+- **Port 53** – Used for converting domain names into IP addresses (DNS).  
+
+Each program that needs network access **listens on a specific port**.  
+
+---
+
+## Hands-On: Checking Open Ports  
+
+To see which ports are currently active on your computer:  
+
+### Windows (Command Prompt)  
+```sh
+netstat -ano
+```
+
+### Linux/macOS (Terminal)  
+```sh
+netstat -tulnp
+```
+
+This command lists all **open ports** and the programs using them.  
+
+---
+
+## TCP vs. UDP: Two Ways to Communicate  
+
+### What is TCP?  
+**TCP (Transmission Control Protocol)** ensures reliable communication.  
+- **All packets arrive in order**.  
+- **Lost packets are resent**.  
+- **Data delivery is guaranteed**.  
+- **Slower** but more reliable.  
+
+TCP is used for:  
+- **Web browsing** (HTTP, HTTPS).  
+- **File transfers** (FTP, SFTP).  
+- **Email** (SMTP, IMAP, POP3).  
+
+### What is UDP?  
+**UDP (User Datagram Protocol)** is faster but less reliable.  
+- **Packets might arrive out of order**.  
+- **Packets might be lost and not resent**.  
+- **Data delivery is not guaranteed**.  
+- **Faster** but less reliable.  
+
+UDP is used for:  
+- **Online gaming** (small delays don’t matter).  
+- **Live video streaming** (speed is more important than perfect accuracy).  
+- **VoIP calls** (real-time communication).  
+
+---
+
+## Hands-On: Writing a Basic TCP Client  
+
+### Step 1: Create a Simple TCP Client  
+
+This **client** will connect to a **server** and send a message.  
+
+#### Create a file called `tcp_client.py`:  
+```python
+import socket
+
+# Define server IP and port
+server_ip = "127.0.0.1"  # Localhost (your own machine)
+server_port = 12345       # Any unused port
+
+# Create a TCP socket
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to the server
+client.connect((server_ip, server_port))
+print(f"Connected to {server_ip}:{server_port}")
+
+# Send a message
+message = "Hello, Server!"
+client.send(message.encode())
+
+# Receive response
+response = client.recv(1024).decode()
+print(f"Received from server: {response}")
+
+# Close the connection
+client.close()
 ```
 
 ---
 
-# 🔟 Recap – What You Just Learned  
+### Step 2: Create a TCP Server  
 
-✅ How networks work and why they matter  
-✅ Circuit vs. packet switching  
-✅ How clients and servers communicate  
-✅ What sockets are and why we need them  
-✅ The key network protocols  
-✅ Wired vs. wireless networks  
-✅ Hands-on practice with commands, Python, and GNS3  
+This **server** will listen for incoming connections from a client.  
 
-You’re now ready to **go deeper into real networking concepts.**  
-Next up: **The Sockets API.**
+#### Create a file called `tcp_server.py`:  
+```python
+import socket
+
+# Define IP and port to listen on
+server_ip = "127.0.0.1"  # Localhost
+server_port = 12345
+
+# Create a TCP socket
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind to the IP and port
+server.bind((server_ip, server_port))
+
+# Listen for incoming connections (max 5 clients in queue)
+server.listen(5)
+print(f"Server listening on {server_ip}:{server_port}")
+
+while True:
+    # Accept a connection
+    client_socket, client_address = server.accept()
+    print(f"Accepted connection from {client_address}")
+
+    # Receive data from the client
+    data = client_socket.recv(1024).decode()
+    print(f"Received: {data}")
+
+    # Send a response
+    response = "Message received"
+    client_socket.send(response.encode())
+
+    # Close the connection
+    client_socket.close()
+```
+
+---
+
+### Step 3: Run the Server and Client  
+
+#### First, Start the Server  
+```sh
+python tcp_server.py
+```
+
+#### Then, In a New Terminal, Start the Client  
+```sh
+python tcp_client.py
+```
+
+**Expected Output (Server Side):**  
+```
+Server listening on 127.0.0.1:12345
+Accepted connection from ('127.0.0.1', 54321)
+Received: Hello, Server!
+```
+
+**Expected Output (Client Side):**  
+```
+Connected to 127.0.0.1:12345
+Received from server: Message received
+```
+
+---
+
+## Hands-On: Capturing TCP Packets in Wireshark  
+
+1. Open **Wireshark**.  
+2. Start a **capture** on your network interface.  
+3. Run the **TCP server and client** again.  
+4. In Wireshark, **filter packets by port number**:  
+   ```
+   tcp.port == 12345
+   ```
+5. You should see **packets exchanged between the client and server**.  
+
+---
+
+
 
