@@ -21,11 +21,7 @@
 - type: linkedin
   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
   url:  'https://www.linkedin.com/in/abdulrahman-tamim/'                  # Fill with your Linkedin homepage
-
-
-- type: more
-  icon: 'fa-solid fa-id-badge'
-  url: 'https://getmydropper.vercel.app/'  
+  
 
 - type: rss
   icon: "fas fa-rss"
