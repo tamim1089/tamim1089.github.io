@@ -1,5 +1,5 @@
   ---
-  title: Networking Concepts Part 1 - Networking Overview
+  title: Networking Concepts Parts 1 to 5
   date: 2025-03-19 09:17:00 +/-TTTT
   image:
     path: /assets/img/favicons/image.jpg
@@ -8,10 +8,231 @@
   tags: [networks]
   ---
   
-  # Welcome to Networking Concepts – The Chill Guide  
-
+  # Welcome to Networking Concepts – The Chill Guide
 
 So, you wanna understand how computers talk to each other? Maybe you just wanna know what the heck an IP address is, or why your WiFi sucks sometimes? Well, you’re in the right place. This blog series is gonna break down networking from the absolute basics to the deepest details, in a way that even your grandma (or your lazy friend who never reads) could get. We’ll cover how data moves across the internet, what makes a network fast or slow, and even how hackers exploit weak setups. No boring textbook talk—just real, useful knowledge you can actually apply. If you use the internet (which, let’s be real, you do), then this is for you. Let’s get into it. 
+
+
+# Before We Begin: Setting Up Like a Pro
+
+## Do You Even Need to Install This?
+
+You could just read this blog and move on, but if you actually want to **see networking in action**, you’ll need to install some tools. We’re not just talking about theory here—you’ll be **writing Python scripts, simulating real networks, and troubleshooting like a pro**.  
+
+If you follow along, you’ll understand **how data moves, how the internet works, and how to automate networking with code.** This isn’t just for learning, it’s **preparing you for real-world skills**.
+
+---
+
+# 1. Installing Python
+
+### Why Do We Need Python?
+- Because networking isn’t just cables and routers, it’s about **programming, automation, and security.**
+- We’ll use Python to **analyze packets, build network tools, and simulate attacks (ethically, of course).**
+- Most networking tools today **are written in Python**, so knowing it is essential.
+
+---
+
+## Windows
+1. Go to [python.org](https://www.python.org/downloads/) and download the latest version.
+2. **IMPORTANT:** Check the box **"Add Python to PATH"** before clicking Install.
+3. Open Command Prompt (`Win + R`, type `cmd`, hit Enter) and verify the installation:
+   ```sh
+   python --version
+   ```
+   If it shows `Python 3.x.x`, you’re good.
+
+---
+
+## macOS
+1. Open Terminal (`Cmd + Space`, type "Terminal", hit Enter).
+2. Run:
+   ```sh
+   brew install python3
+   ```
+   If you don’t have Homebrew, install it first:
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+   Then try again.
+3. Verify the installation:
+   ```sh
+   python3 --version
+   ```
+
+---
+
+## Linux (Debian/Ubuntu)
+1. Open Terminal (`Ctrl + Alt + T`).
+2. Run:
+   ```sh
+   sudo apt update && sudo apt install python3 -y
+   ```
+3. Verify:
+   ```sh
+   python3 --version
+   ```
+
+---
+
+## Arch Linux
+1. Open Terminal.
+2. Run:
+   ```sh
+   sudo pacman -S python
+   ```
+3. Verify:
+   ```sh
+   python --version
+   ```
+
+---
+
+# 2. Installing VS Code
+
+We need a **good code editor**, and VS Code is lightweight, cross-platform, and great for Python.
+
+### Windows / macOS / Linux
+1. Go to [code.visualstudio.com](https://code.visualstudio.com/) and download it.
+2. Install it like any other program.
+3. Open it and make sure it runs.
+
+### Adding VS Code to Command Line (Optional but Useful)
+- **Windows**: Open VS Code, press `Ctrl+Shift+P`, search for `"Shell Command: Install"` and select it.
+- **macOS**:  
+  ```sh
+  sudo ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
+  ```
+- **Linux** (if not already installed):  
+  ```sh
+  sudo apt install code -y  # Ubuntu/Debian
+  sudo pacman -S code       # Arch
+  ```
+
+---
+
+# 3. Installing GNS3 (For Network Simulation)
+
+We’ll use **GNS3** to **simulate real networks**, from small LANs to **full-scale internet routing setups**.
+
+### Windows / macOS
+1. Download from [gns3.com](https://www.gns3.com/software/download).
+2. Install it and follow the setup wizard.
+
+### Linux (Debian/Ubuntu)
+1. Open Terminal.
+2. Run:
+   ```sh
+   sudo add-apt-repository ppa:gns3/ppa -y
+   sudo apt update
+   sudo apt install gns3-gui gns3-server -y
+   ```
+
+### Arch Linux
+1. Open Terminal.
+2. Run:
+   ```sh
+   sudo pacman -S gns3-gui gns3-server
+   ```
+
+---
+
+# 4. Understanding the Command Line (CLI)
+
+You **can’t** work with networking without using the **command line**, so let’s get comfortable with it.  
+This is **not optional**—you’ll be using it for **configuring networks, troubleshooting issues, and running scripts**.
+
+---
+
+## Windows (Command Prompt & PowerShell)
+- Open Command Prompt (`Win + R`, type `cmd`, hit Enter).
+- **Navigating Folders**:
+  ```sh
+  cd path\to\folder
+  ```
+- **List files**:
+  ```sh
+  dir
+  ```
+- **Check your IP Address**:
+  ```sh
+  ipconfig
+  ```
+- **Test network connectivity (Ping Google)**:
+  ```sh
+  ping google.com
+  ```
+
+---
+
+## macOS/Linux (Terminal)
+- Open Terminal.
+- **Navigating Folders**:
+  ```sh
+  cd path/to/folder
+  ```
+- **List files**:
+  ```sh
+  ls -l
+  ```
+- **Check your IP Address**:
+  ```sh
+  ip a  # Linux
+  ifconfig  # macOS (May require: sudo ifconfig)
+  ```
+- **Test network connectivity (Ping Google)**:
+  ```sh
+  ping google.com
+  ```
+- **Trace the path of your internet request (see all routers your data passes through)**:
+  ```sh
+  traceroute google.com  # Linux/macOS
+  tracert google.com     # Windows
+  ```
+
+---
+
+# 5. Running Python from the CLI
+
+Once you have Python installed, you’ll want to run your scripts from the command line.
+
+### Windows:
+```sh
+python script.py
+```
+
+### macOS/Linux:
+```sh
+python3 script.py
+```
+
+If you see an error like **"command not found"**, try `python` instead of `python3`.
+
+---
+
+# 6. Final Check
+
+Make sure everything works:
+
+- Open **VS Code** and make sure it runs.
+- Open **Terminal/Command Prompt** and type:
+  ```sh
+  python --version
+  ```
+  It should return **Python 3.x.x**.
+- Open **GNS3** and start a blank project.
+- Run:
+  ```sh
+  ping google.com
+  ```
+  If you get responses, your internet is working fine.
+
+---
+
+# You’re Ready
+
+Now that everything’s set up, you’re ready to **start learning networking the right way**.  
+No theory without practice. **Let’s get to it.**
+
 ---
   
   # Introduction
