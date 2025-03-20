@@ -213,8 +213,6 @@ China’s **Strategic Support Force (PLASSF)** has seamlessly integrated **comme
 2. **Cross-Analyze with OSINT Data** – Analysts compare satellite images with **social media posts, procurement records, and shipping manifests** to identify **weaknesses or emerging threats**.  
 3. **Feed into Precision Targeting** – AI-enhanced analysis pinpoints **fuel depots, ammunition storage sites, and radar installations**—potential targets in the event of a conflict.  
 
-### **Case Study: The South China Sea Surveillance Operation**  
-
 In **2022**, Chinese intelligence agencies **purchased SAR imagery of the South China Sea from multiple commercial satellite providers**, tracking:  
 
 - **U.S. aircraft carrier movements weeks before official Pentagon briefings.**  
@@ -344,7 +342,6 @@ China’s intelligence strategy **doesn’t just collect open-source data—it e
 - **Mapping Critical Infrastructure** – Publicly available satellite imagery, procurement records, and employee LinkedIn profiles allow China to **map energy grids, defense contractors, and critical supply chains** before launching cyberattacks.
 - **Identifying Vulnerable Entry Points** – PLA analysts monitor **Western university research papers and open-source GitHub repositories** for **zero-day vulnerabilities** in military software.
 
-### **Case Study: Cyber Attacks on Defense Contractors**
 Between **2018-2021**, Chinese state-sponsored hackers **compromised U.S. defense contractors**, targeting suppliers of **missile systems, naval technology, and AI research**. Many of these breaches started with **OSINT-driven reconnaissance** on company employees.
 
 ---
@@ -358,7 +355,6 @@ China isn’t just gathering OSINT—it’s **manipulating it**. The PLA uses **
 - **Fabricated Troop Movements** – Chinese bots flood military forums with **fake reports** on Western troop deployments.
 - **False Satellite Imagery** – AI-altered satellite images create **phantom airbases, non-existent missile tests, and fake military installations**.
 
-### **Case Study: Taiwan Invasion Simulations**
 In 2023, Chinese military forums spread **forged OSINT reports claiming Taiwan was conducting preemptive missile drills**. Western analysts later confirmed **these reports were fabricated using AI**.
 
 ---
@@ -377,7 +373,6 @@ China’s OSINT capabilities are **not just government-run**. A **network of sta
 - **Analyzing procurement records of U.S. and NATO defense contractors**.
 - **Providing military intelligence solutions directly to the PLA**.
 
-### **Case Study: Knowfar’s NATO Strategy Reports**
 Knowfar has **compiled extensive intelligence reports on NATO war planning**, using **open-source defense publications, wargame simulations, and leaked procurement data**.
 
 ---
@@ -391,7 +386,6 @@ China integrates OSINT directly into **live military exercises** and **war simul
 - **Monitoring Foreign Military Exercises** – China **tracks U.S. and NATO war drills** via satellite imagery, news leaks, and social media.
 - **Testing Cyber Warfare Tactics** – The PLA runs **OSINT-enhanced cyber war games**, simulating **digital attacks based on real adversary weaknesses**.
 
-### **Case Study: South China Sea Naval Exercises**
 During the **PLA’s 2022 South China Sea war games**, OSINT analysis of U.S. fleet movements was **incorporated into live naval drills**, allowing China to **simulate real-time engagements** with U.S. warships.
 
 ---
@@ -405,7 +399,6 @@ The PLA extensively maps **Western defense supply chains** using open data to id
 - **Mapping Defense Subcontractors** – PLA intelligence analysts **monitor global arms trade records, corporate filings, and industry conferences** to understand how **U.S. and NATO weapons are built**.
 - **Analyzing Shipping & Logistics Routes** – China uses **AIS ship tracking, trade manifests, and satellite imagery** to monitor **military equipment shipments**.
 
-### **Case Study: Tracking U.S. Arms Shipments to Ukraine**
 In 2022, China **monitored U.S. arms shipments to Ukraine** by analyzing:
 - **EU railway schedules**
 - **Commercial cargo tracking services**
