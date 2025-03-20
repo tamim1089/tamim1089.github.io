@@ -223,7 +223,8 @@ The **command line** is essential for networking. It lets us:
 ```sh
 ipconfig  # Shows network configuration
 ```
-> Sample Output :
+Sample Output :
+
 ```sh
 Windows IP Configuration
 
