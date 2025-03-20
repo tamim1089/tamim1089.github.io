@@ -203,7 +203,8 @@ Wireshark lets us **capture and analyze network traffic**, which is useful for d
    sudo usermod -aG wireshark $(whoami)
    ```
 
-**Screenshot Here:** Show Wireshark’s interface with a network interface selected.  
+![image](https://github.com/user-attachments/assets/5dc0ffa7-6e9e-4969-b2c3-71bd59a0ffe3)
+
 
 ---
 
@@ -221,8 +222,31 @@ The **command line** is essential for networking. It lets us:
 #### Windows (Command Prompt)  
 ```sh
 ipconfig  # Shows network configuration
+```
+> Sample Output :
+```sh
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet 2:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Ethernet adapter Ethernet 3:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe20::b56b:c149:522e:242e%3
+   IPv4 Address. . . . . . . . . . . : 10.10.20.27
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 10.10.20.1
+```
+
+```sh
 ping google.com  # Sends packets to Google to check connectivity
 ```
+![image](https://github.com/user-attachments/assets/85d68911-c64a-4676-a422-78ddde00b7e6)
+
 
 #### Linux/macOS (Terminal)  
 ```sh
@@ -273,7 +297,10 @@ A **network** is simply **two or more devices that communicate** with each other
 This could be:  
 - **Two computers connected with a cable**.  
 - **Your phone and WiFi router**.  
-- **Millions of servers powering the internet**.  
+- **Millions of servers powering the internet**.
+
+![image](https://github.com/user-attachments/assets/26ae46be-ec60-4ba1-a759-0176d30f7ac9)
+This Picture Maps the Entire Internet and Its Evolution Since 1997
 
 ### Why Do We Need Networks?  
 Without networks, every device would be **isolated**. You couldn’t:  
