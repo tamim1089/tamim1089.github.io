@@ -1,1 +1,1 @@
-Blog - https://getmydropper.github.io/
+Blog - https://0xdotgz.github.io
