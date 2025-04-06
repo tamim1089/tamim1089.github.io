@@ -1,0 +1,9 @@
+---
+title: BufferOverflow for Skids - Part I
+date: 2025-03-19 14:54:00 +/-TTTT
+image:
+  path: /assets/posts/bof-part1/draw.png
+  class: "img-right"
+categories: [CyberSecurity]
+tags: [lowlevelprogramming, bof, securecoding]  
+---
