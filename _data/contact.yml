@@ -2,7 +2,7 @@
 
 - type: github
   icon: "fab fa-github"
-  url: 'https://github.com/0xdotgz'
+  url: 'https://github.com/tamim1089'
 
 #- type: twitter
 #  icon: "fa-brands fa-x-twitter"
@@ -21,12 +21,9 @@
 
 - type: linkedin
   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
-  url:  'https://www.linkedin.com/in/naresh-j-apt/'                  # Fill with your Linkedin homepage
+  url:  'https://www.linkedin.com/in/abdulrahman-tamim-a7149a29b/'                  # Fill with your Linkedin homepage
 
 
-- type: more
-  icon: 'fa-solid fa-id-badge'
-  url: 'https://getmydropper.vercel.app/'  
 
 - type: rss
   icon: "fas fa-rss"
