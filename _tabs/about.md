@@ -6,6 +6,7 @@ order: 4
 
 ## Hey there 👋
 [![HTB Academy Transcript](https://img.shields.io/badge/View_HTB_Transcript-PDF-green?logo=hackthebox&style=flat-square)](https://hex.infy.uk/HTB%20Academy%20Student%20Transcript.pdf)
+<br>
 ---
 I'm [Abdulrahman Tamim](https://www.linkedin.com/in/abdulrahman-tamim-a7149a29b/), a Cybersecurity Engineering sophomore at Abu Dhabi University with a long-standing passion for cybersecurity that started back in high school.
 
