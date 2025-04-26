@@ -1,3 +1,9 @@
+---
+# the default layout is 'page'
+icon: fas fa-info-circle
+order: 4
+---
+
 ## Hey there 👋
 
 [![HTB Academy Transcript](https://img.shields.io/badge/View_HTB_Transcript-PDF-green?logo=hackthebox&style=flat-square)](https://hex.infy.uk/HTB%20Academy%20Student%20Transcript.pdf)
