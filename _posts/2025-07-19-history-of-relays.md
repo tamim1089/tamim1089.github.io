@@ -3,7 +3,10 @@
 title: History Of Relays
 date: 2025-07-19 09:17:00 +/-TTTT
 categories: [History]
-tags: [Documentary][History]  
+image:
+  path: /assets/img/favicons/image.png
+  class: "img-right"
+tags: [History]  
 ---
 
 
