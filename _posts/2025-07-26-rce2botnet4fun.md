@@ -2,7 +2,7 @@
 title: RCE2Botnet4Fun - Part I
 date: 2025-07-26 14:54:00 +/-TTTT
 image:
-  path: /assets/posts/bof-part1/cam.jpg
+  path: assets/img/favicons/cam.jpg
   class: "img-right"
 categories: [CyberSecurity]
 tags: [iot, web, researching]  
@@ -205,7 +205,13 @@ echo "all scans completed"
 
 ## Output Video :
 
-{% embed url="https://www.youtube.com/watch?v=zbG_Qyr-K3I" %}
+<iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/zbG_Qyr-K3I" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+</iframe>
+
 
 ***
 
