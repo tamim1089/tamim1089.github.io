@@ -42,6 +42,89 @@ Using the Shodan query `3.1.3.150324` filters devices exposing the Hikvision web
 
 ***
 
+
+## Exposed APIs
+
+**Hikvision devices expose an undocumented but widely reverse engineered HTTP API**, used by their web interface, mobile apps, and some SDKs. You can absolutely interact with it from the CLI using tools like `curl`. These APIs, known as **ISAPI**, operate over plain HTTP(S) and return XML (or JSON on newer firmware). Most endpoints require **basic or digest auth** and respond with structured device control logic.
+
+***
+
+### Authentication
+
+Default auth:
+
+```bash
+curl -u admin:12345 http://<ip>/ISAPI/System/deviceInfo
+```
+
+Some endpoints may use **digest auth**:
+
+```bash
+curl --digest -u admin:12345 http://<ip>/ISAPI/Security/users
+```
+
+***
+
+### Example Interactions
+
+#### Get Device Info
+
+```bash
+curl -u admin:12345 http://<ip>/ISAPI/System/deviceInfo
+```
+
+#### Reboot Device
+
+```bash
+curl -u admin:12345 -X PUT http://<ip>/ISAPI/System/reboot
+```
+
+#### List Users
+
+```bash
+curl -u admin:12345 http://<ip>/ISAPI/Security/users
+```
+
+#### Change Admin Password
+
+```bash
+curl -u admin:12345 -X PUT http://<ip>/ISAPI/Security/users/1 -d '
+<User>
+  <id>1</id>
+  <userName>admin</userName>
+  <password>NewStrongPassword</password>
+</User>'
+```
+
+#### Get Snapshot (JPEG)
+
+```bash
+curl -u admin:12345 http://<ip>/ISAPI/Streaming/channels/1/picture
+```
+
+#### Live Event Stream (Motion, Alerts)
+
+```bash
+curl -u admin:12345 http://<ip>/ISAPI/Event/notification/alertStream
+```
+
+***
+
+### API Endpoint Reference
+
+<table><thead><tr><th>Function</th><th width="112.45458984375">Method</th><th>Endpoint</th><th>Notes</th></tr></thead><tbody><tr><td>Get device info</td><td>GET</td><td><code>/ISAPI/System/deviceInfo</code></td><td>Model, firmware, serial</td></tr><tr><td>Reboot device</td><td>PUT</td><td><code>/ISAPI/System/reboot</code></td><td>Admin only</td></tr><tr><td>List users</td><td>GET</td><td><code>/ISAPI/Security/users</code></td><td>Returns full user list</td></tr><tr><td>Modify user</td><td>PUT</td><td><code>/ISAPI/Security/users/&#x3C;id></code></td><td>XML payload</td></tr><tr><td>Get snapshot</td><td>GET</td><td><code>/ISAPI/Streaming/channels/1/picture</code></td><td>Image stream, snapshot mode</td></tr><tr><td>Event stream</td><td>GET</td><td><code>/ISAPI/Event/notification/alertStream</code></td><td>Multipart XML + JPEG</td></tr><tr><td>Get interfaces</td><td>GET</td><td><code>/ISAPI/System/Network/interfaces</code></td><td>Network config</td></tr><tr><td>Firmware upgrade</td><td>PUT</td><td><code>/ISAPI/System/updateFirmware</code> (upload <code>.dav</code>)</td><td>Needs firmware binary</td></tr><tr><td>ISP mode control</td><td>PUT</td><td><code>/ISAPI/Image/channels/1/ISPMode</code></td><td>For switching day/night</td></tr><tr><td>ANPR trigger</td><td>GET</td><td><code>/ISAPI/Traffic/MNPR/channels/1?laneNo=1&#x26;OSD=1</code></td><td>License plate capture</td></tr></tbody></table>
+
+***
+
+### Tips
+
+* Endpoints return **XML** by default. Use `-H "Accept: application/xml"` for clarity.
+* Unauthorized? Try both basic and digest auth. Some firmwares toggle between them.
+* Discover endpoints by sniffing traffic with Burp or browser dev tools when using the web interface.
+
+***
+
+
 ## RCE Thru Curl :
 
 Initial exploitation began by selecting targets from Shodan search results using the query `3.1.3.150324`, which yields Hikvision devices exposing the vulnerable `/SDK/webLanguage` endpoint. A crafted HTTP `PUT` request was sent with `Content-Type: application/x-www-form-urlencoded; charset=UTF-8`, injecting command execution payloads via XML input like `<?xml version="1.0"?><language>$(COMMAND)</language>`, exploiting the unsanitized input processing in CVE-2021-36260. Successful execution was verified by chaining the payload with a subsequent `curl` request to retrieve command output (e.g., dumping `/etc/passwd`, `ifconfig`, or directory listings) from a predictable location (`/webLib/x`) on the target, confirming unauthenticated RCE on multiple devices.
