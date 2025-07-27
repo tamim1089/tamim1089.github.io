@@ -146,7 +146,7 @@ Serial		: 0000000000000000
 
 ## Automation For Testing vulnerability
 
-As we have a list of 2300 hosts, it would be insanity to test it manually, so we will use an automation optimized for speed bash script to test the vulnerable ones.
+As we have a list of 3500 hosts, it would be insanity to test it manually, so we will use an automation optimized for speed bash script to test the vulnerable ones.
 
 ```bash
 #!/bin/bash
