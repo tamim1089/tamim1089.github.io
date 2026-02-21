@@ -1,6 +1,6 @@
 ---
 title: AI is Dead, and We Have Killed It
-date: 2026-02-19 14:54:00 +/-TTTT
+date: 2026-02-02 14:54:00 +/-TTTT
 image:
   path: assets/img/favicons/1_yVPk4XHXefuKVVOrGEvJiQ.webp
   class: "img-right"
