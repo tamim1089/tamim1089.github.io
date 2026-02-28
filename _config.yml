@@ -15,7 +15,7 @@ timezone:
 # ↓ -----------
 title: Abdulrahman's Blog # the main title
 
-tagline: My CyberSecurity Blog  # it will display as the subtitle
+tagline: My Blog  # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
@@ -41,7 +41,7 @@ social:
     - https://github.com/tamim1089 # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    - https://www.linkedin.com/in/abdulrahman-tamim-a7149a29b/3
+    - https://www.linkedin.com/in/abdulrahman-tamim
 # Site Verification Settings
 webmaster_verifications:
   google: # fill in your Google verification code
@@ -59,7 +59,7 @@ analytics:
   google:
     id: # fill in your Google Analytics ID
   goatcounter:
-    id: # fill in your GoatCounter ID
+    id: niggerkiller
   umami:
     id: # fill in your Umami ID
     domain: # fill in your Umami domain
