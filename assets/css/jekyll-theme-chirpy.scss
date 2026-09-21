@@ -1,0 +1,24 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+/* Center Markdown tables (the theme left-aligns them at min-width 70% on large screens) */
+.content .table-wrapper > table {
+  width: auto;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  th,
+  td {
+    text-align: center;
+  }
+}
