@@ -305,7 +305,7 @@ LaToza, Venolia and DeLine surveyed developers at Microsoft, 157 and 187 respons
 
 Naur's theory building explains why. The theory connecting a program to its problem lives in the people who built it, and the source can outlive the theory. A rewrite can keep every behavior and lose the operational knowledge. Documentation can describe every interface and miss why a constraint exists. A refactor that removes some duplication can bring back a bug that the duplication was there to prevent. A new team can inherit every repository and still spend months learning the system.
 
-The notional machine from the first section and Naur's theory are the same kind of thing at two sizes. A student holds a model of what the language does. A team holds a model of what the system is for and why it looks the way it does. Neither is in the source, both get built by working with the code, and both can be wrong while the code still runs. I find that connection more interesting than either idea alone.
+The notional machine from the first section and Naur's theory are the same kind of thing at two sizes. A student holds a model of what the language does. A team holds a model of what the system is for and why it looks the way it does. Neither is in the source, both get built by working with the code, and both can be wrong while the code still runs. I like that connection more than either idea alone.
 
 The two posts on this blog are a small example. The history says the dates were changed on purpose, by me, in commits titled `Update date in C programming post` and `Update post date to 2079-09-06`. The code knows what changed, the history knows who and when, and the reason is only in my head. That's the easy case, I'm still here to ask.
 
