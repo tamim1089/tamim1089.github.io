@@ -110,6 +110,8 @@ A language model can remove far more difficulty than any worked example. It supp
 
 Put these studies side by side and one rule falls out, though none of them states it: keep with the learner the operations that carry the concept, and take away the rest.
 
+I am not sure that rule survives a real course. Nobody tells you in advance which operation carries the concept. In the linked-list example I assumed it was the pointer updates. For some students it is the idea that a node is an object at all, and a generated constructor would take that away too.
+
 ## Lectures
 
 A lecture can carry an argument with a continuity that separate exercises have trouble matching. Listening to an argument is still a different activity from learning to use it.
@@ -134,7 +136,7 @@ The study I find most useful on this is about what feedback is measured against.
 
 Programming environments are full of this trade. A type checker rejects a program before a test can fail. A debugger exposes state after a crash. A property-based testing library hands back a minimal counterexample, and a reviewer asks why an invariant holds. Each exposes different information at a different moment. An AI assistant adds a new case: corrective feedback that arrives before the learner has even formulated the error, in the form of a corrected function. That can save an hour. It can also skip the act of isolating the fault, which was the hour's lesson.
 
-Shute's review of formative feedback turns the research into guidance [\[19\]](#ref-19): immediate feedback for difficult tasks and weaker learners, delayed or facilitative feedback for simple tasks and stronger ones, and feedback after the learner has attempted a solution, not while an engaged learner is mid-thought. For programming I would add that timing is only one of four dials. The others are how precisely the feedback locates the error, whether it gives a verdict, a hint, an explanation or a fix, and whether the learner already knows what kind of mistake they made. A good tutor turns the dials so that the next useful piece of work stays with the learner. That is rarely the same as giving as much feedback as possible.
+Shute's review of formative feedback turns the research into guidance [\[19\]](#ref-19): immediate feedback for difficult tasks and weaker learners, delayed or facilitative feedback for simple tasks and stronger ones, and feedback after the learner has attempted a solution, not while an engaged learner is mid-thought. For programming I would add that timing is only one of four dials. The others are how precisely the feedback locates the error, whether it gives a verdict, a hint, an explanation or a fix, and whether the learner already knows what kind of mistake they made. A good tutor turns the dials so that the next useful piece of work stays with the learner.
 
 ## Worked examples and problem solving
 
@@ -229,7 +231,7 @@ Peter Naur argued in 1985 that what a team builds is not really the code. It is 
 
 Parnas made the architectural version of the point in 1972. Using a small program that builds a KWIC index, he argued for splitting a system so that each module hides a design decision that is difficult or likely to change [\[31\]](#ref-31). Modularity, on that view, is a bet about future change. A tool that shows a system only as files and symbols can miss the boundary that actually matters, which might be a deployment unit, a service owner, a data contract or a failure boundary. Conway added the organization: organizations, he wrote, "are constrained to produce designs which are copies of the communication structures of these organizations" [\[32\]](#ref-32). Tools sit inside organizations that already shape the code. A review tool that assumes each file has one owner supports one kind of team, and a tool built for editing together supports another.
 
-"Developer experience" is too small a phrase for this. The real question is what a tool makes visible, what it makes cheap, and what those costs turn into after a few years. Some engineering habits that look cultural are partly infrastructure. AI tools will do the same. A generator that makes implementation cheap will probably mean more code. An assistant that makes explanation cheap may mean reviewers ask each other fewer questions. An agent that answers architecture questions may mean fewer people ever learn the architecture. None of that is necessarily bad. All of it follows from a changed cost, and it is worth deciding on purpose.
+"Developer experience" is too small a phrase for this. The real question is what a tool makes visible, what it makes cheap, and what those costs turn into after a few years. Some engineering habits that look cultural are partly infrastructure. AI tools will do the same. A generator that makes implementation cheap will probably mean more code. An assistant that makes explanation cheap may mean reviewers ask each other fewer questions. An agent that answers architecture questions may mean fewer people ever learn the architecture. None of that is necessarily bad. All of it follows from a changed cost.
 
 ## Build it or depend on it
 
@@ -241,7 +243,7 @@ Mockus, Fielding and Herbsleb studied what that knowledge looks like in two larg
 
 So building internally gives full control only if the team keeps the knowledge needed to use it, and an abandoned internal library can be less controllable than a maintained external one. Adopting a dependency buys an interface to someone else's accumulated knowledge, spread across releases, discussions, issue trackers, tests and maintainers. The interface is always incomplete, but the knowledge exists on the other side of it. McIlroy saw the economics at the 1968 NATO conference [\[34\]](#ref-34). He proposed a components industry with catalogues of routine families, parameterized by precision, robustness, generality and time-space trade-offs, and noted that Bell Labs alone ran about 100 machines from a dozen makers, each needing the same support software written again.
 
-The practical questions follow. How specific is the requirement, and how much would a wrong answer cost? How mature and how stable is the external implementation? How much would the team have to learn to maintain its own replacement, and which future changes need local control? What happens if upstream disappears? Underneath all of them is one decision: which knowledge the team chooses to own.
+The practical questions follow. How specific is the requirement, and how much would a wrong answer cost? How mature and how stable is the external implementation? How much would the team have to learn to maintain its own replacement, and which future changes need local control? What happens if upstream disappears?
 
 ## Code generation
 
@@ -282,6 +284,8 @@ _Figure 4. Change in task completion time with AI in METR's 2025 study: what eco
 That result should not be read as "AI makes developers slower". In February 2026 METR announced it was changing the study's design. In the follow-up, 30% to 50% of developers said they had held back some tasks because they did not want to do them without AI, which biases a randomized comparison, and the new estimates, 18% faster for returning developers and 4% faster for new ones, have confidence intervals that include no effect [\[37\]](#ref-37). METR expects to keep redesigning as models improve. What the first study established is less about AI than about people: the developers' sense of their own speed pointed the wrong way.
 
 DORA's surveys look at whole teams. In the 2024 report, each 25% increase in AI adoption was associated with an estimated 1.5% drop in delivery throughput and a 7.2% drop in delivery stability [\[38\]](#ref-38). In the 2025 survey of about 5,000 respondents, AI adoption was associated with higher throughput and still with lower stability [\[39\]](#ref-39). Writing code faster and delivering working software are different measures, and they can move in opposite directions. "Code generation" is really specification, gathering context, implementation, testing, review, integration and maintenance, and a model can speed up one of those while slowing down another. A single productivity number hides which.
+
+I trust the DORA numbers less than METR's. An association across thousands of survey respondents mixes teams that adopted AI because they were struggling with teams that adopted it because they were doing well, and a survey cannot separate the two. METR randomized, which is why its result, and its later problems with who agreed to take part, are more informative.
 
 ## Reading unfamiliar code
 
@@ -361,7 +365,7 @@ This connects to Kapur's result. Productive failure says the attempt is where th
 
 Supervising the automation has its own failure mode. Parasuraman and Manzey's review found that automation bias, where people follow an automated aid's errors or miss the problems it does not flag, "cannot be prevented by training or instructions" [\[48\]](#ref-48). Anyone reviewing a large generated diff is in that position.
 
-None of this is an argument against tools. Risko and Gilbert define cognitive offloading as "the use of physical action to alter the information processing requirements of a task so as to reduce cognitive demand" [\[49\]](#ref-49), and people do it constantly, with notes, calculators, reminders and documentation. Offloading is part of competent thinking. The real question is whether you still need the capacity you offloaded for some other part of the job. A programmer does not need to memorize an API, because the documentation holds it. A programmer does need to understand aliasing, because aliasing shows up in debugging, concurrency, ownership and performance. A team does not need everyone to remember the deploy commands, because the pipeline holds them, but someone needs to understand the deployment model on the day the pipeline breaks. Deciding which skills to let go of and which to keep, on purpose, is the design problem.
+None of this is an argument against tools. Risko and Gilbert define cognitive offloading as "the use of physical action to alter the information processing requirements of a task so as to reduce cognitive demand" [\[49\]](#ref-49), and people do it constantly, with notes, calculators, reminders and documentation. Offloading is part of competent thinking. The real question is whether you still need the capacity you offloaded for some other part of the job. A programmer does not need to memorize an API, because the documentation holds it. A programmer does need to understand aliasing, because aliasing shows up in debugging, concurrency, ownership and performance. A team does not need everyone to remember the deploy commands, because the pipeline holds them, but someone needs to understand the deployment model on the day the pipeline breaks. Deciding which skills to let go of and which to keep is the design problem, and I do not know how to settle it for programming. Aliasing seems obviously necessary to keep. I am less sure about reading assembly or writing regular expressions by hand, and I suspect my own list is mostly a list of what I happened to learn.
 
 ## Learning programming with AI
 
@@ -391,6 +395,8 @@ Which leaves the question I think matters most for teams now. Cheap generation r
 _Figure 8. The level in the tub is code that nobody on the team understands yet. It rises whenever generation outpaces assimilation, however fast either one is._
 
 Generation rate and assimilation rate are different quantities, and nothing here says less code should be generated. A person can also write code faster than a team can absorb it. An agent just makes that imbalance much easier to reach.
+
+I do not know what a team's assimilation rate actually is, how to measure it well, or whether it can be raised much. That is the part of this I would most like to see someone study.
 
 ## References
 
