@@ -1,0 +1,48 @@
+{
+ "points": {
+  "Ana": [
+   14,
+   15,
+   15,
+   16,
+   15,
+   15
+  ],
+  "Bilal": [
+   8,
+   22,
+   15,
+   15,
+   15,
+   15
+  ],
+  "Chen": [
+   10,
+   12,
+   14,
+   16,
+   18,
+   20
+  ]
+ },
+ "measures": {
+  "Ana": {
+   "range": 2,
+   "sum of deviations": 0,
+   "mean abs deviation": 0.33,
+   "standard deviation": 0.58
+  },
+  "Bilal": {
+   "range": 14,
+   "sum of deviations": 0,
+   "mean abs deviation": 2.33,
+   "standard deviation": 4.04
+  },
+  "Chen": {
+   "range": 10,
+   "sum of deviations": 0,
+   "mean abs deviation": 3.0,
+   "standard deviation": 3.42
+  }
+ }
+}
